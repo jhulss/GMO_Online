@@ -40,3 +40,41 @@ Then('the product description should be:') do |expected_description|
     expect(description).to eq(expected_description.strip)
 end
   
+
+# Black country shorts
+
+# Verifica el nombre del producto
+Then('the name of the product should be {string}') do |expected_name|
+  product_name = page.find(:xpath, '/html/body/h2[6]/a').text.strip
+  expect(product_name).to eq(expected_name)
+end
+
+# Verifica el subtítulo del producto
+Then('the description should read {string}') do |expected_description|
+  tagline = page.find(:xpath, '/html/body/p[36]/font/em').text.strip
+  expect(tagline).to eq(expected_description)
+end
+
+# Verifica el precio del producto
+Then('the listed cost should be {string}') do |expected_price|
+  displayed_price = page.find(:xpath, '/html/body/div[6]/table/tbody/tr[1]/td[3]').text.strip
+  expect(displayed_price).to eq(expected_price)
+end
+
+# Verifica la cantidad en stock
+Then('the inventory level should indicate {string}') do |expected_units|
+  available_units = page.find(:xpath, '/html/body/div[6]/table/tbody/tr[2]/td[2]').text.strip
+  expect(available_units).to eq(expected_units)
+end
+
+# Verifica el número de ítem
+Then('the identifier should be {string}') do |expected_identifier|
+  product_id = page.find(:xpath, '/html/body/div[6]/table/tbody/tr[3]/td[2]').text.strip
+  expect(product_id).to eq(expected_identifier)
+end
+
+# Verifica la descripción del producto
+Then('the product description should state:') do |expected_description|
+  description = page.find(:xpath, '/html/body/p[37]').text.strip
+  expect(description).to eq(expected_description.strip)
+end

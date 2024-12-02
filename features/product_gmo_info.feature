@@ -14,3 +14,15 @@ Scenario: Review details of the "External Frame Backpack" product
         """
         An ideal pack for long trail trips, its strong heli-arc welded 6061-T6 aircraft-quality aluminum frame with V-truss design resists diagonal distortion. Thoughtful design allows head clearance when the bag is in lower position. Four outside pockets keep necessary gear and accessories within easy reach. Fully-adjustable suspension features curved, tapered shoulder straps with load-lift straps and sternum strap provide load carrying comfort. Hipbelt has generous padding. Two large main compartments; lower sleeping bag compartment has outside zip access. Extender bar and extension collar. Heavy-duty nylon ripstop packcloth. Made in USA.
         """
+
+Scenario: Validate details of the "Back Country Shorts"
+        Given the user has navigated to the product page
+        Then the name of the product should be "Back Country Shorts"
+        And the description should read "Our quick drying shorts are a customer favorite. Perfect for a day of any outdoor activity or just lounging around the camp."
+        And the listed cost should be "$ 24.95"
+        And the inventory level should indicate "59"
+        And the identifier should be "1005"
+        And the product description should state:
+        """
+        Lightweight nylon shorts can take on any activity and double as swimwear. Supplex nylon fabric is strong and dries quickly. Nylon liner dries quickly, allowing shorts to be used as swimwear. Two side pockets and one back zip pocket with mesh bottoms for drainage. Elasticised belt provides a comfortable, snug fit. Made in USA.
+        """
