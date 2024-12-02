@@ -11,13 +11,28 @@ Green Mountain Outpost permite a los usuarios explorar su diseño y funcionalida
 - [Ruby](https://rubyinstaller.org/downloads/)
 - [WebDriver for Chrome](https://chromedriver.chromium.org/downloads)
 
-### Ruby Gems
+## Ruby Gems
 
 ```bash
-gem install cucumber
-gem install capybara
-gem install selenium-webdriver
-gem install selenium
-gem install rspec
-gem install capybara-screenshot
+> gem install cucumber
+> gem install capybara
+> gem install selenium-webdriver
+> gem install selenium
+> gem install rspec
+> gem install capybara-screenshot
+```
+
+## Comando para correr un feature en específico
+```bash
+> cucumber features\[feature_file_name.feature]
+```
+
+## Comando para correr todos los features implementados
+```bash
+> cucumber features
+```
+
+## Comando para exportar un reporte tipo HTML de las features, luego se guarda en la carpeta reports
+```bash
+> cucumber features -f html -o reports/reportGMOPost.html
 ```
