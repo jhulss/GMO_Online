@@ -48,3 +48,8 @@ end
 Then(/^the page title should be "([^"]*)"$/) do |page_title|
   expect(page.title).to eq(page_title)
 end
+
+Then(/^I should see the text "([^"]*)" moving from right to left$/) do |moving_text|
+  moving_text_element = find(:xpath, "/html/body/p[1]/font/em/strong/marquee")
+  expect(moving_text_element.text).to eq(moving_text)
+end

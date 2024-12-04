@@ -26,3 +26,7 @@ Feature: Validate Green Mountain Outpost page functionality
   Scenario: Verify that the page title is correct
     Given I am on the Green Mountain Outpost page
     Then the page title should be "Browser Test Page"
+  
+  Scenario: Verify the moving text "Sometimes Even Left and Right Doesn't Mean Anything"
+    Given I am on the Green Mountain Outpost page
+    Then I should see the text "Sometimes Even Left and Right Doesn't Mean Anything" moving from right to left
