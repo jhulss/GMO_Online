@@ -13,10 +13,10 @@ Scenario: Enter quantities for one product
     | Glacier Sun Glasses    | 1        |  
 
     When I click on the "Place an order" Button
-    Then I should see the Product Total
-    And I should see the correct Sales Tax
-    And I should see the Shipping & Handling
-    And I should see the Grand Total
+    Then I should see the Product Total "67.99"
+    And I should see the correct Sales Tax "3.40"
+    And I should see the Shipping & Handling "5.00"
+    And I should see the Grand Total "76.39"
 
 Scenario: Enter quantities for two products
     And I fill in the product quantities in the table
@@ -26,12 +26,12 @@ Scenario: Enter quantities for two products
     | Glacier Sun Glasses    | 5        |  
 
     When I click on the "Place an order" Button
-    Then I should see the Product Total
-    And I should see the correct Sales Tax
-    And I should see the Shipping & Handling
-    And I should see the Grand Total
+    Then I should see the Product Total "699.85"
+    And I should see the correct Sales Tax "34.99"
+    And I should see the Shipping & Handling "5.00"
+    And I should see the Grand Total "739.84"
 
-Scenario: Enter quantities for a selection of six products
+Scenario: Enter quantities for a selection of five products
     And I fill in the product quantities in the table
 
     | product                | input    |    
@@ -42,7 +42,24 @@ Scenario: Enter quantities for a selection of six products
     | Back Country Shorts    | 10       |
 
     When I click on the "Place an order" Button
-    Then I should see the Product Total
-    And I should see the correct Sales Tax
-    And I should see the Shipping & Handling
-    And I should see the Grand Total
+    Then I should see the Product Total "2206.51"
+    And I should see the correct Sales Tax "110.33"
+    And I should see the Shipping & Handling "5.00"
+    And I should see the Grand Total "2321.84"
+
+Scenario: Enter quantities for a selection of multiple products
+    And I fill in the product quantities in the table
+
+    | product                | input    | 
+    | 3 Person Dome Tent     | 700      |   
+    | External Frame Backpack| 400      |  
+    | Glacier Sun Glasses    | 550      | 
+    | Padded Socks           | 900      | 
+    | Hiking Boots           | 1100     |  
+    | Back Country Shorts    | 12000    |
+
+    When I click on the "Place an order" Button
+    Then I should see the Product Total "757648.50"
+    And I should see the correct Sales Tax "37882.43"
+    And I should see the Shipping & Handling "5.00"
+    And I should see the Grand Total "795535.93"

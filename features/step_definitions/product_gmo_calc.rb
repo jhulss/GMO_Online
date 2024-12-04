@@ -41,76 +41,69 @@ And(/^I fill in the product quantities in the table$/) do |tabla|
   end
 end
 
-# Método para calcular el precio total de los productos
-def calcular_precio_total(rows)
-  total_producto_esperado = 0.0
-  rows.each_with_index do |fila, index|
-    next if index == 0
-    celdas = fila.all('td')
-    if celdas.count == 5
-      precio_total = celdas[4].text.strip.gsub(/[^\d\.]/, '').to_f
-      total_producto_esperado += precio_total
-    end
-  end
-  total_producto_esperado
+# Función para convertir un texto a float limpiando caracteres no numéricos
+def parse_to_float(text)
+  text.strip.gsub(/[^\d\.]/, '').to_f
 end
 
-Then(/^I should see the Product Total$/) do
+# Función para calcular el total de productos de una tabla
+def calculate_product_total(rows)
+  total = 0.0
+  rows.each_with_index do |row, index|
+    next if index == 0 # Saltamos la primera fila (encabezado)
+    cells = row.all('td')
+    next unless cells.count == 5 # Validamos que la fila tenga 5 celdas
+    total_price = parse_to_float(cells[4].text)
+    total += total_price
+  end
+  total
+end
+
+# Método para calcular el precio total de los productos
+Then(/^I should see the Product Total "([^"]*)"$/) do |expected_total|
   within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
-    filas = all("tr")
-    total_producto_esperado = calcular_precio_total(filas)
-    celdas = filas[filas.count - 4].all('td')
-    total_producto = celdas[2].text.strip.gsub(/[^\d\.]/, '').to_f
-    expect(total_producto).to eq(total_producto_esperado.round(2))
+    rows = all("tr")
+    total_products = calculate_product_total(rows)
+    product_total_in_table = parse_to_float(rows[rows.count - 4].all('td')[2].text)
+    expect(product_total_in_table).to eq(expected_total.to_f)
   end
 end
 
 # Método para calcular el impuesto sobre ventas esperado
-def calcular_impuesto_ventas(total_producto_esperado)
-  (total_producto_esperado.round(2) * 0.05).round(2)
-end
-
-And(/^I should see the correct Sales Tax$/) do
+And(/^I should see the correct Sales Tax "([^"]*)"$/) do |expected_tax|
   within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
-    filas = all("tr")
-    total_producto_esperado = calcular_precio_total(filas)
-    celdas = filas[filas.count - 4].all('td')
-    total_producto = celdas[2].text.strip.gsub(/[^\d\.]/, '').to_f
-    celdas = filas[filas.count - 3].all('td')
-    impuesto_ventas = celdas[1].text.strip.gsub(/[^\d\.]/, '').to_f
-    impuesto_ventas_esperado = calcular_impuesto_ventas(total_producto_esperado)
-    expect(impuesto_ventas).to eq(impuesto_ventas_esperado)
+    rows = all("tr")
+    total_products = calculate_product_total(rows)
+
+    product_total_in_table = parse_to_float(rows[rows.count - 4].all('td')[2].text)
+    sales_tax_in_table = parse_to_float(rows[rows.count - 3].all('td')[1].text)
+
+    expected_sales_tax = (total_products.round(2) * 0.05).round(2)
+    expect(sales_tax_in_table).to eq(expected_tax.to_f)
   end
 end
 
 # Método para calcular el Shipping & Handling
-And(/^I should see the Shipping & Handling$/) do
+And(/^I should see the Shipping & Handling "(.*)"$/) do |expected_shipping|
   within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
-    filas = all("tr")
-    total_producto_esperado = calcular_precio_total(filas)
-    celdas = filas[filas.count - 2].all('td')  # Asumiendo que Shipping & Handling está en la penúltima fila
-    shipping_handling = celdas[1].text.strip.gsub(/[^\d\.]/, '').to_f
-    shipping_handling_esperado = 5.0
-    expect(shipping_handling).to eq(shipping_handling_esperado)
+    rows = all("tr")
+    shipping_handling_in_table = parse_to_float(rows[rows.count - 2].all('td')[1].text)
+    expect(shipping_handling_in_table).to eq(expected_shipping.to_f.round(2))
   end
 end
 
 # Método para calcular el total general esperado
-def calcular_total_general(impuesto_ventas, total_producto)
-  (impuesto_ventas + total_producto + 5.0).round(2)
-end
-
-And(/^I should see the Grand Total$/) do
+And(/^I should see the Grand Total "([^"]*)"$/) do |expected_grand_total|
   within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
-    filas = all("tr")
-    total_producto_esperado = calcular_precio_total(filas)
-    celdas = filas[filas.count - 4].all('td')
-    total_producto = celdas[2].text.strip.gsub(/[^\d\.]/, '').to_f
-    celdas = filas[filas.count - 3].all('td')
-    impuesto_ventas = celdas[1].text.strip.gsub(/[^\d\.]/, '').to_f
-    celdas = filas[filas.count - 1].all('td')
-    total_grande = celdas[1].text.strip.gsub(/[^\d\.]/, '').to_f
-    total_grande_esperado = calcular_total_general(impuesto_ventas, total_producto)
-    expect(total_grande).to eq(total_grande_esperado)
+    rows = all("tr")
+    total_products = calculate_product_total(rows)
+
+    product_total_in_table = parse_to_float(rows[rows.count - 4].all('td')[2].text)
+    sales_tax_in_table = parse_to_float(rows[rows.count - 3].all('td')[1].text)
+    grand_total_in_table = parse_to_float(rows[rows.count - 1].all('td')[1].text)
+
+    fixed_charge = 5.0
+    calculated_grand_total = (sales_tax_in_table + product_total_in_table + fixed_charge).round(2)
+    expect(grand_total_in_table).to eq(calculated_grand_total.to_f)
   end
 end
