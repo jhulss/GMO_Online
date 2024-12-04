@@ -36,3 +36,4 @@ Green Mountain Outpost permite a los usuarios explorar su diseño y funcionalida
 ```bash
 > cucumber features -f html -o reports/reportGMOPost.html
 ```
+
