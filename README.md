@@ -37,7 +37,3 @@ Green Mountain Outpost permite a los usuarios explorar su diseño y funcionalida
 > cucumber features -f html -o reports/reportGMOPost.html
 ```
 
-## Comando para correr un feature en especifico
-```bash
-...\Mercury-Tours-Test-Automation> cucumber features\[feature_file_name.feature]
-```
