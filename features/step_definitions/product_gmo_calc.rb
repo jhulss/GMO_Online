@@ -107,3 +107,12 @@ And(/^I should see the Grand Total "([^"]*)"$/) do |expected_grand_total|
     expect(grand_total_in_table).to eq(calculated_grand_total.to_f)
   end
 end
+
+#
+# Para verificar la notificación y aceptar el mensaje emergente
+Then(/^A popup appears displaying "(.*)"$/) do |expected_message|
+  alert_box = page.driver.browser.switch_to.alert
+  actual_message = alert_box.text
+  expect(actual_message).to eq(expected_message)
+  alert_box.accept
+end
