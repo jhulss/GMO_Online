@@ -108,3 +108,10 @@ Then('I should see the receipt page with the following details:') do |table|
   # Verifica el total general
   expect(page).to have_content(expected_details['Grand Total'])
 end
+
+
+Then('I should see an alert with the text {string}') do |expected_text|
+  alert = page.driver.browser.switch_to.alert
+  expect(alert.text).to eq(expected_text)
+  alert.accept
+end
