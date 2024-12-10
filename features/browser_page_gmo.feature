@@ -1,32 +1,37 @@
-Feature: Validate Green Mountain Outpost page functionality
-  As a user
-  I want to interact with elements on the Green Mountain Outpost page
-  So that I can verify their functionality
+Feature: Interact with the Browser Test page on the GMO site
+    As a user
+    I want to test various browser features
+    So I can validate the functionality of the page
 
-  Scenario: Click on the Left or Right button and verify alert
-    Given I am on the Green Mountain Outpost page
-    When I click on the "Left or Right" button
-    Then I should see an alert displaying the text "This button AND the GMO image should be on the right edge of the page!"
+    Background:
+        Given I am on the Green Mountain Outpost browser test page
 
-  Scenario: Verify the page header
-    Given I am on the Green Mountain Outpost page
-    Then the page should display the header "All Browsers Are Not Created Equal"
+    Scenario: Validate the "Left or Right" button functionality
+        When I click on the "Left or Right" button
+        Then I should see an alert displaying the text "This button AND the GMO image should be on the right edge of the page!"
+        And the page title should be "Browser Test"
 
-  Scenario: Verify technologies displayed for Internet Explorer 3.0
-    Given I am on the Green Mountain Outpost page
-    Then the technologies listed for Internet Explorer 3.0 should include:
-      | dot bullets   |
-      | circle bullets|
-      | square bullets|
+    Scenario: Validate the header text on the Browser Test page
+        When I verify the page layout
+        Then the page should display the header "Browser Test"
+        And the page title should be "Browser Test"
 
-  Scenario: Verify the footer disclaimer text
-    Given I am on the Green Mountain Outpost page
-    Then the footer should contain the text "This is a sample web site for demonstration purposes only!"
+    Scenario: Verify the technologies listed for Internet Explorer 3.0
+        When I scroll to the technologies section
+        Then the technologies listed for Internet Explorer 3.0 should include:
+        | Blinking Text         |
+        | Rotating Images       |
+        | Background Sounds     |
+        | Custom Scrollbars     |
 
-  Scenario: Verify that the page title is correct
-    Given I am on the Green Mountain Outpost page
-    Then the page title should be "Browser Test Page"
-  
-  Scenario: Verify the moving text "Sometimes Even Left and Right Doesn't Mean Anything"
-    Given I am on the Green Mountain Outpost page
-    Then I should see the text "Sometimes Even Left and Right Doesn't Mean Anything" moving from right to left
+    Scenario: Validate the footer content
+        When I scroll to the footer section
+        Then the footer should contain the text "This is a sample site for demonstration purposes only!"
+
+    Scenario: Verify the title displayed inside the body
+        When I check the body title
+        Then the page should display the title "Browser Test" inside the body
+
+    Scenario: Verify the marquee text
+        When I observe the moving text
+        Then I should see the text "Welcome to the Browser Test page!" moving from right to left

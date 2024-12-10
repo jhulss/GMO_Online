@@ -17,7 +17,11 @@ Given(/^the user has navigated to the "About This Site" page$/) do
     page.driver.browser.manage.window.maximize
     visit('https://demo.borland.com/gmopost/about.htm')
   end
-  
+
+When(/^the user verifies they are on the correct page$/) do
+  expect(page).to have_current_path('https://demo.borland.com/gmopost/about.htm', url: true)
+end  
+
 Then(/^the title of the page should be "About This Site"$/) do
     expect(page).to have_title('About This Site')
   end
@@ -37,7 +41,6 @@ Then(/^the page should list the incorporated technologies:$/) do |table|
     
     tech_items = tech_list.all('li').map { |li| li.find('font').text.strip }
   
-    # Compara cada tecnología de la tabla Gherkin con los elementos en la lista
     table.raw.each do |row|
       expect(tech_items).to include(row[0])
     end

@@ -10,6 +10,7 @@ Feature: Enter the About The GMO Site to know about the page
 
  Scenario: Validate the details on the "About This Site" page
             Given the user has navigated to the "About This Site" page
+            When I verify the page layout
             Then the title of the page should be "About This Site"
             And the subtitle should state:
             """
