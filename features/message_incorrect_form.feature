@@ -52,3 +52,7 @@ Scenario Outline: Fill the form with any character or string
     | Padded Socks           | wasd         | 
     | Hiking Boots           | cero         |  
     | Back Country Shorts    | 20twenty20   |
+
+
+
+    
