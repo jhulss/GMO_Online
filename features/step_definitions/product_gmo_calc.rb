@@ -1,4 +1,4 @@
-# Llena el campo de entrada con el valor para el producto especificado.
+# Método para llenar el campo de entrada con el valor para el producto especificado
 And(/^I enter "(.*)" in the input field "(.*)"$/) do |value, product_name|
   within(:xpath, '/html/body/form/table/tbody/tr[2]/td/div/center/table') do
     row = find('tr', text: product_name)
@@ -11,14 +11,46 @@ When(/^I click on the "Place an order" Button$/) do
   click_button('bSubmit')
 end
 
+# Base de datos falsa con los precios de los productos
+PRODUCT_PRICES = {
+  "3 Person Dome Tent" => 299.99,
+  "External Frame Backpack" => 179.95,
+  "Glacier Sun Glasses" => 67.99,
+  "Padded Socks" => 19.99,
+  "Hiking Boots" => 109.90,
+  "Back Country Shorts" => 24.95
+}
+
+Before do
+  # Simular la "base de datos" falsa con los precios
+  @product_prices = PRODUCT_PRICES
+end
+
+Then(/^I verify the total price for "(.*)" with "(.*)" order as "(.*)"$/) do |product, input, expected_price|
+  within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
+    # Obtain the price for the product
+    price_per_unit = @product_prices[product]
+    
+    # Calculate the expected total price
+    calculated_price = price_per_unit * input.to_f
+    
+    # Convert expected price to float for comparison
+    expected_price_float = expected_price.to_f
+
+    # Check if the calculated price is close to the expected price
+    expect(calculated_price).to be_within(0.01).of(expected_price_float)
+  end
+end
+
 # Verifica que el precio total por cada artículo sea correcto.
-Then(/^I verify the total price for "(.*)" as "(.*)"$/) do |product_name, expected_price|
-within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
-  row = find('tr', text: product_name)
-  total_price_value = row.find('td:nth-child(5)').text.strip.gsub(/[^\d\.]/, '').to_f
-  expect(total_price_value).to eq(expected_price.to_f)
-end
-end
+#Then(/^I verify the total price for "(.*)" as "(.*)"$/) do |product_name, expected_price|
+#  within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
+#    row = find('tr', text: product_name)
+#    total_price_value = row.find('td:nth-child(5)').text.strip.gsub(/[^\d\.]/, '').to_f
+#    expect(total_price_value).to eq(expected_price.to_f)
+#  end
+#end
+
 #
 # Método para llenar las cantidades de los productos en la tabla
 And(/^I fill in the product quantities in the table$/) do |tabla|

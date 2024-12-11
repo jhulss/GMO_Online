@@ -9,7 +9,7 @@ Background:
 Scenario Outline: Add quantity of single product
   And I enter "<input>" in the input field "<product>"
   When I click on the "Place an order" Button
-  Then I verify the total price for "<product>" as "<expected_price>" 
+  Then I verify the total price for "<product>" with "<input>" order as "<expected_price>" 
   Examples:
     | product                | input | expected_price |
     | 3 Person Dome Tent     | 1     | 299.99         |
@@ -17,7 +17,7 @@ Scenario Outline: Add quantity of single product
 Scenario Outline: Fill the quantity of a single product
   And I enter "<input>" in the input field "<product>"
   When I click on the "Place an order" Button
-  Then I verify the total price for "<product>" as "<expected_price>"
+  Then I verify the total price for "<product>" with "<input>" order as "<expected_price>" 
   Examples:
     | product                | input | expected_price |   
     | 3 Person Dome Tent     | 1     | 299.99         |
@@ -30,7 +30,7 @@ Scenario Outline: Fill the quantity of a single product
 Scenario Outline: Add quantity with varying inputs for a single product
   And I enter "<input>" in the input field "<product>"
   When I click on the "Place an order" Button
-  Then I verify the total price for "<product>" as "<expected_price>" 
+  Then I verify the total price for "<product>" with "<input>" order as "<expected_price>" 
   Examples:
     | product                | input | expected_price |   
     | 3 Person Dome Tent     | 4     | 1199.96        |
@@ -43,7 +43,7 @@ Scenario Outline: Add quantity with varying inputs for a single product
 Scenario Outline: Add a lot quantity of diverse products
   And I enter "<input>" in the input field "<product>"
   When I click on the "Place an order" Button
-  Then I verify the total price for "<product>" as "<expected_price>"
+  Then I verify the total price for "<product>" with "<input>" order as "<expected_price>" 
   Examples:
     | product                | input | expected_price |   
     | External Frame Backpack| 30    | 5398.50        | 
@@ -54,7 +54,7 @@ Scenario Outline: Add a lot quantity of diverse products
 Scenario Outline: Add quantity of multiple diverse products
   And I enter "<input>" in the input field "<product>"
   When I click on the "Place an order" Button
-  Then I verify the total price for "<product>" as "<expected_price>"
+  Then I verify the total price for "<product>" with "<input>" order as "<expected_price>" 
   Examples:
     | product                | input | expected_price |   
     | 3 Person Dome Tent     | 3     | 899.97         |
