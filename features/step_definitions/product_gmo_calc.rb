@@ -26,6 +26,7 @@ Before do
   @product_prices = PRODUCT_PRICES
 end
 
+# Verifica que el precio total por cada artículo sea correcto.
 Then(/^I verify the total price for "(.*)" with "(.*)" order as "(.*)"$/) do |product, input, expected_price|
   within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
     # Obtain the price for the product
@@ -41,15 +42,6 @@ Then(/^I verify the total price for "(.*)" with "(.*)" order as "(.*)"$/) do |pr
     expect(calculated_price).to be_within(0.01).of(expected_price_float)
   end
 end
-
-# Verifica que el precio total por cada artículo sea correcto.
-#Then(/^I verify the total price for "(.*)" as "(.*)"$/) do |product_name, expected_price|
-#  within(:xpath, "/html/body/form/table/tbody/tr[1]/td/div/center/table") do
-#    row = find('tr', text: product_name)
-#    total_price_value = row.find('td:nth-child(5)').text.strip.gsub(/[^\d\.]/, '').to_f
-#    expect(total_price_value).to eq(expected_price.to_f)
-#  end
-#end
 
 #
 # Método para llenar las cantidades de los productos en la tabla
