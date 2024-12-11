@@ -5,6 +5,10 @@ When(/^I click on the "About The GMO Site" link$/) do
     find(:xpath, '/html/body/form/div[1]/center/table/tbody/tr/td[2]/input').click
   end
   
+When(/^I verify the About Gmo page layout$/) do
+  expect(page).to have_selector(:xpath, "//h1", text: "About This Site")
+end
+
 Then(/^I should be redirected to the About page$/) do
     expect(page).to have_current_path('https://demo.borland.com/gmopost/about.htm', url: true)
   end
