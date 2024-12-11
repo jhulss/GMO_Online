@@ -12,7 +12,7 @@ When(/^I click on the "Left or Right" button$/) do
 end
 
 When(/^I verify the page layout$/) do
-  expect(page).to have_selector(:xpath, "//h1", text: "Browser Test")
+  expect(page).to have_selector(:xpath, "//h1", text: "All Browsers Are Not Created Equal")
 end
 
 When(/^I scroll to the technologies section$/) do
@@ -49,11 +49,6 @@ Then(/^the technologies listed for Internet Explorer 3.0 should include:$/) do |
   table.raw.each { |row| expect(tech_items).to include(row[0]) }
 end
 
-Then(/^the footer should contain the text "([^"]*)"$/) do |footer_text|
-  footer = find(:xpath, "/html/body/p[2]/font/strong")
-  expect(footer.text).to include(footer_text)
-end
-
 Then(/^the page should display the title "([^"]*)" inside the body$/) do |body_title|
   body_title_element = find(:xpath, "/html/body/h1/font")
   expect(body_title_element.text).to eq(body_title)
@@ -66,24 +61,17 @@ end
 Then(/^I should see the text "([^"]*)" moving from right to left$/) do |moving_text|
   moving_text_element = find(:xpath, "/html/body/p[1]/font/em/strong/marquee")
   expect(moving_text_element.text).to eq(moving_text)
+
 end
 
 Then(/^the footer should contain the text "([^"]*)"$/) do |footer_text|
   footer = find(:xpath, "/html/body/p[2]/font/strong")
-  expect(footer.text).to include(footer_text)
-end
 
-Then(/^the page should display the title "([^"]*)" inside the body$/) do |body_title|
-  # Verificar que el título dentro del body coincide con el texto dado
-  body_title_element = find(:xpath, "/html/body/h1/font")
-  expect(body_title_element.text).to eq(body_title)
-end
+  footer_text_actual = footer.text
 
-Then(/^the page title should be "([^"]*)"$/) do |page_title|
-  expect(page.title).to eq(page_title)
-end
+  puts "Footer Text Actual: #{footer_text_actual}"
 
-Then(/^I should see the text "([^"]*)" moving from right to left$/) do |moving_text|
-  moving_text_element = find(:xpath, "/html/body/p[1]/font/em/strong/marquee")
-  expect(moving_text_element.text).to eq(moving_text)
+  footer_text_actual = footer_text_actual.gsub("\n", "\\n")
+
+  expect(footer_text_actual).to include(footer_text)
 end
